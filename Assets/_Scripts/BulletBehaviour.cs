@@ -77,6 +77,7 @@ public class BulletBehaviour : MonoBehaviour
         if (Vector3.Distance(transform.position, Vector3.zero) > range)
         {
             //Destroy(gameObject);
+            _reset();
         }
         //if(isColliding)
         //{
