@@ -13,7 +13,6 @@ public class CubeBehaviour : MonoBehaviour
     public bool isColliding;
     public bool debug;
     public List<CubeBehaviour> contacts;
-    public List<BulletBehaviour> contacts2;
 
     private MeshFilter meshFilter;
     private Bounds bounds;
