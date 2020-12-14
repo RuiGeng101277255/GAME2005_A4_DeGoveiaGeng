@@ -61,21 +61,21 @@ public class CubeBehaviour : MonoBehaviour
             else
             {
                 falling_speed *= -1.0f;
-                transform.position += new Vector3(0.0f, 1.0f, 0.0f);
-                isColliding = false;
+                //transform.position += new Vector3(0.0f, 0.2f, 0.0f);
+                //isColliding = false;
             }
         }
         else
         {
-            if(Mathf.Abs(falling_speed)< 0.1f)
+            if(Mathf.Abs(falling_speed) < 0.1f)
             {
                 isMoving = false;
                 falling_speed = 0.0f;
             }
             //isMoving = false;
             falling_speed *= -1.0f;
-            //transform.position += new Vector3(0.0f, 1.0f, 0.0f);
-            isColliding = false;
+            //transform.position += new Vector3(0.0f, 0.2f, 0.0f);
+            //isColliding = false;
         }
     }
 
