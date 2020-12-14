@@ -18,6 +18,19 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            // delays firing
+            //if (Time.frameCount % fireRate == 0)
+           // {
+                //var tempBullet = Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
+                //tempBullet.GetComponent<BulletBehaviour>().direction = bulletSpawn.forward;
+
+                //tempBullet.transform.SetParent(bulletManager.gameObject.transform);
+                Debug.Log("c pressed");
+                bulletManager.shoot(bulletSpawn);
+            //}
+        }
         _Fire();
     }
 
@@ -28,12 +41,15 @@ public class PlayerBehaviour : MonoBehaviour
             // delays firing
             if (Time.frameCount % fireRate == 0)
             {
-                var tempBullet = Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
-                tempBullet.GetComponent<BulletBehaviour>().direction = bulletSpawn.forward;
+                //var tempBullet = Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
+                //tempBullet.GetComponent<BulletBehaviour>().direction = bulletSpawn.forward;
 
-                tempBullet.transform.SetParent(bulletManager.gameObject.transform);
+                //tempBullet.transform.SetParent(bulletManager.gameObject.transform);
+
+                bulletManager.shoot(bulletSpawn);
             }
 
         }
+        
     }
 }

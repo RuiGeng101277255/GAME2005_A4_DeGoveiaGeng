@@ -16,10 +16,14 @@ public class BulletBehaviour : MonoBehaviour
     private MeshFilter bulletMeshFilter;
     private Bounds bounds;
 
+    //pol
+    public bool inUse;
+
     // Start is called before the first frame update
     void Start()
     {
         debug = false;
+        _reset();
         _calcRadius(scale);
 
         bulletMeshFilter = GetComponent<MeshFilter>();
@@ -31,8 +35,11 @@ public class BulletBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _Move();
-        _CheckBounds();
+        if(inUse)
+        {
+            _Move();
+            _CheckBounds();
+        }
     }
 
     private void _Move()
@@ -44,7 +51,7 @@ public class BulletBehaviour : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, Vector3.zero) > range)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 
@@ -64,5 +71,20 @@ public class BulletBehaviour : MonoBehaviour
         float z = size.z;// /2.0f;
         radius = Mathf.Sqrt(x * x + y * y + z * z);
         Debug.Log("Bullet radius: " + radius);
+    }
+
+    private void _reset()
+    {
+        inUse = false;
+        transform.position = new Vector3(0.0f, -1000.0f, 0.0f);
+    }
+
+    public void activate(Transform tra)
+    {
+        //transform.SetParent(tra);
+        direction = tra.forward;
+        transform.position = tra.position;
+        inUse = true;
+        Debug.Log("Bullet Shot");
     }
 }
