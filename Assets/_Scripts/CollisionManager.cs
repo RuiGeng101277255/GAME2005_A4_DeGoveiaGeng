@@ -6,16 +6,19 @@ using UnityEngine;
 public class CollisionManager : MonoBehaviour
 {
     public CubeBehaviour[] actors;
+    public BulletBehaviour[] bullet_actors;
 
     // Start is called before the first frame update
     void Start()
     {
         actors = FindObjectsOfType<CubeBehaviour>();
+        bullet_actors = FindObjectsOfType<BulletBehaviour>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Cube checks
         for (int i = 0; i < actors.Length; i++)
         {
             for (int j = 0; j < actors.Length; j++)
@@ -24,6 +27,15 @@ public class CollisionManager : MonoBehaviour
                 {
                     CheckAABBs(actors[i], actors[j]);
                 }
+            }
+        }
+
+        //Bullet checks
+        for (int b = 0; b < bullet_actors.Length; b++)
+        {
+            for (int c = 0; c < actors.Length; c++)
+            {
+                BulletCubeAABBs(bullet_actors[b], actors[c]);
             }
         }
     }
@@ -49,5 +61,28 @@ public class CollisionManager : MonoBehaviour
             }
            
         }
+    }
+
+    public static void BulletCubeAABBs(BulletBehaviour b, CubeBehaviour c)
+    {
+        if ((b.min.x <= c.max.x && b.max.x >= c.min.x) &&
+            (b.min.y <= c.max.y && b.max.y >= c.min.y) &&
+            (b.min.z <= c.max.z && b.max.z >= c.min.z))
+        {
+            if (!b.cube_contacts.Contains(c))
+            {
+                b.cube_contacts.Add(c);
+                b.isColliding = true;
+            }
+        }
+        else
+        {
+            if (b.cube_contacts.Contains(c))
+            {
+                b.cube_contacts.Remove(c);
+                b.isColliding = false;
+            }
+
+        } 
     }
 }

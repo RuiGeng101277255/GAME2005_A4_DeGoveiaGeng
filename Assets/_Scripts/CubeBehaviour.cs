@@ -13,6 +13,7 @@ public class CubeBehaviour : MonoBehaviour
     public bool isColliding;
     public bool debug;
     public List<CubeBehaviour> contacts;
+    public List<BulletBehaviour> bullet_contacts;
 
     private float gravity;
     private float falling_speed;

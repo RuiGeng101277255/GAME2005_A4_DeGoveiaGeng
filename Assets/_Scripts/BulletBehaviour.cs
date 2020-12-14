@@ -11,18 +11,25 @@ public class BulletBehaviour : MonoBehaviour
 
     public bool debug;
     public Vector3 scale;
+    public Vector3 max;
+    public Vector3 min;
     private float radius;
 
     private MeshFilter bulletMeshFilter;
     private Bounds bounds;
 
+    public List<CubeBehaviour> cube_contacts;
+    public List<BulletBehaviour> bullet_contacts;
+
     //pol
     public bool inUse;
+    public bool isColliding;
 
     // Start is called before the first frame update
     void Start()
     {
         debug = false;
+        isColliding = false;
         _reset();
         _calcRadius(scale);
 
@@ -35,7 +42,10 @@ public class BulletBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(inUse)
+        max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
+        min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
+
+        if (inUse)
         {
             _Move();
             _CheckBounds();
@@ -52,6 +62,12 @@ public class BulletBehaviour : MonoBehaviour
         if (Vector3.Distance(transform.position, Vector3.zero) > range)
         {
             //Destroy(gameObject);
+        }
+        if(isColliding)
+        {
+            direction.z *= -1.0f;
+            transform.position -= new Vector3(0.0f, 0.0f, 1.0f);
+            isColliding = false;
         }
     }
 
