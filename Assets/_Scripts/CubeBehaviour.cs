@@ -14,6 +14,7 @@ public class CubeBehaviour : MonoBehaviour
     public bool debug;
     public List<CubeBehaviour> contacts;
     public List<BulletBehaviour> bullet_contacts;
+    public float mass;
 
     private float gravity;
     private float falling_speed;
@@ -24,10 +25,10 @@ public class CubeBehaviour : MonoBehaviour
 
     public enum typeCollision
     {
+        NONE,
         TOP_DOWN,
         SIDES,
-        FRONT_BACK,
-        NONE
+        FRONT_BACK
     };
     public typeCollision Type;
     

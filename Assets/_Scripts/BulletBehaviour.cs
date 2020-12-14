@@ -6,8 +6,10 @@ using UnityEngine;
 public class BulletBehaviour : MonoBehaviour
 {
     public float speed;
+    private float current_speed;
     public Vector3 direction;
     public float range;
+    public float mass;
 
     public bool debug;
     public Vector3 scale;
@@ -26,10 +28,10 @@ public class BulletBehaviour : MonoBehaviour
     public bool isColliding;
     public enum typeCollision
     {
+        NONE,
         TOP_DOWN,
         SIDES,
-        FRONT_BACK,
-        NONE
+        FRONT_BACK
     };
     public typeCollision Type;
 
@@ -58,12 +60,16 @@ public class BulletBehaviour : MonoBehaviour
         {
             _Move();
             _CheckBounds();
+            if (Mathf.Abs(current_speed) < 0.5f)
+            {
+                _reset();
+            }
         }
     }
 
     private void _Move()
     {
-        transform.position += direction * speed * Time.deltaTime;
+        transform.position += direction * current_speed * Time.deltaTime;
     }
 
     private void _CheckBounds()
@@ -86,11 +92,11 @@ public class BulletBehaviour : MonoBehaviour
                 direction.y *= -1.0f;
                 if(direction.y > 0.0f)
                 {
-                    MoveAmount.y += 1.0f;
+                    MoveAmount.y += 0.2f;
                 }
                 else
                 {
-                    MoveAmount.y -= 1.0f;
+                    MoveAmount.y -= 0.2f;
                 }
                 transform.position += MoveAmount;
                 
@@ -99,11 +105,11 @@ public class BulletBehaviour : MonoBehaviour
                 direction.x *= -1.0f;
                 if (direction.x > 0.0f)
                 {
-                    MoveAmount.x += 1.0f;
+                    MoveAmount.x += 0.2f;
                 }
                 else
                 {
-                    MoveAmount.x -= 1.0f;
+                    MoveAmount.x -= 0.2f;
                 }
                 transform.position += MoveAmount;
                 
@@ -112,11 +118,11 @@ public class BulletBehaviour : MonoBehaviour
                 direction.z *= -1.0f;
                 if (direction.z > 0.0f)
                 {
-                    MoveAmount.z += 1.0f;
+                    MoveAmount.z += 0.2f;
                 }
                 else
                 {
-                    MoveAmount.z -= 1.0f;
+                    MoveAmount.z -= 0.2f;
                 }
                 transform.position += MoveAmount;
                 
@@ -126,6 +132,11 @@ public class BulletBehaviour : MonoBehaviour
                 break;
         }
         Type = typeCollision.NONE;
+
+        if (transform.position.y < -0.2f)
+        {
+            Type = typeCollision.TOP_DOWN;
+        }
     }
 
     private void OnDrawGizmos()
@@ -149,6 +160,8 @@ public class BulletBehaviour : MonoBehaviour
     private void _reset()
     {
         inUse = false;
+        current_speed = speed;
+        Type = typeCollision.NONE;
         transform.position = new Vector3(0.0f, -1000.0f, 0.0f);
     }
 
