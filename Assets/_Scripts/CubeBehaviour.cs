@@ -63,7 +63,7 @@ public class CubeBehaviour : MonoBehaviour
     void FixedUpdate()
     {
         // physics related calculations
-        if (transform.position.y > -0.5f)
+        if (transform.position.y >= -0.2f)
         {
             if (!isColliding)
             {
@@ -80,13 +80,17 @@ public class CubeBehaviour : MonoBehaviour
         }
         else
         {
-            if(Mathf.Abs(falling_speed) < 0.1f)
+            if(Mathf.Abs(falling_speed) < 0.01f)
             {
                 isMoving = false;
                 falling_speed = 0.0f;
             }
+            else
+            {
+                falling_speed *= -1.0f;
+            }
             //isMoving = false;
-            falling_speed *= -1.0f;
+            //falling_speed *= -1.0f;
             //transform.position += new Vector3(0.0f, 0.2f, 0.0f);
             //isColliding = false;
         }

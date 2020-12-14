@@ -10,6 +10,7 @@ public class BulletBehaviour : MonoBehaviour
     public Vector3 direction;
     public float range;
     public float mass;
+    public float friction;
 
     public bool debug;
     public Vector3 scale;
@@ -86,55 +87,55 @@ public class BulletBehaviour : MonoBehaviour
         //    isColliding = false;
         //}
 
-        Vector3 MoveAmount = new Vector3(0.0f, 0.0f, 0.0f);
+        //Vector3 MoveAmount = new Vector3(0.0f, 0.0f, 0.0f);
         switch (Type)
         {
             case typeCollision.TOP_DOWN:
                 direction.y *= -1.0f;
-                if(direction.y > 0.0f)
-                {
-                    MoveAmount.y += 0.2f;
-                }
-                else
-                {
-                    MoveAmount.y -= 0.2f;
-                }
-                transform.position += MoveAmount;
+                //if(direction.y > 0.0f)
+                //{
+                //    MoveAmount.y += 0.2f;
+                //}
+                //else
+                //{
+                //    MoveAmount.y -= 0.2f;
+                //}
+                //transform.position += MoveAmount;
                 
                 break;
             case typeCollision.SIDES:
                 direction.x *= -1.0f;
-                if (direction.x > 0.0f)
-                {
-                    MoveAmount.x += 0.2f;
-                }
-                else
-                {
-                    MoveAmount.x -= 0.2f;
-                }
-                transform.position += MoveAmount;
+                //if (direction.x > 0.0f)
+                //{
+                //    MoveAmount.x += 0.2f;
+                //}
+                //else
+                //{
+                //    MoveAmount.x -= 0.2f;
+                //}
+                //transform.position += MoveAmount;
                 
                 break;
             case typeCollision.FRONT_BACK:
                 direction.z *= -1.0f;
-                if (direction.z > 0.0f)
-                {
-                    MoveAmount.z += 0.2f;
-                }
-                else
-                {
-                    MoveAmount.z -= 0.2f;
-                }
-                transform.position += MoveAmount;
+                //if (direction.z > 0.0f)
+                //{
+                //    MoveAmount.z += 0.2f;
+                //}
+                //else
+                //{
+                //    MoveAmount.z -= 0.2f;
+                //}
+                //transform.position += MoveAmount;
                 
                 break;
             case typeCollision.NONE:
-                MoveAmount = new Vector3(0.0f, 0.0f, 0.0f);
+                //MoveAmount = new Vector3(0.0f, 0.0f, 0.0f);
                 break;
         }
         Type = typeCollision.NONE;
 
-        if (transform.position.y < -0.2f)
+        if (transform.position.y <= -0.2f)
         {
             Type = typeCollision.TOP_DOWN;
         }
