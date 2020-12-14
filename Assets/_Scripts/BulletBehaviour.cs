@@ -172,6 +172,7 @@ public class BulletBehaviour : MonoBehaviour
         direction = tra.forward;
         transform.position = tra.position;
         inUse = true;
+        Type = typeCollision.NONE;
         Debug.Log("Bullet Shot");
     }
 }
