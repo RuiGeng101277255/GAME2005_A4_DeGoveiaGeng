@@ -49,7 +49,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKey(KeyCode.C))
         {
             // delays firing
             if (fireDelay == 0.0f)

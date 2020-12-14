@@ -669,7 +669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpawn: {fileID: 681930396}
   bullet: {fileID: 2898771445226466676, guid: dc05ecf40a596104686052b7abdee0d3, type: 3}
-  delayTime: 1
+  delayTime: 0.5
   bulletManager: {fileID: 403008322}
 --- !u!1 &613454532
 GameObject:

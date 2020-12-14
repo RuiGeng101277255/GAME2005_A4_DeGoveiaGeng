@@ -34,7 +34,7 @@ public class BulletManager : MonoBehaviour
             if(!bullet_Pool[i].inUse)
             {
                 bullet_Pool[i].activate(tra);
-                bullet_Pool[i].transform.SetParent(gameObject.transform);
+                bullet_Pool[i].transform.SetParent(bullet_Pool[i].transform);
                 i += PoolSize;
             }
         }
