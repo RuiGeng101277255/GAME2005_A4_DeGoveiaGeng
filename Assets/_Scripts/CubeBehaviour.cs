@@ -22,9 +22,20 @@ public class CubeBehaviour : MonoBehaviour
     private MeshFilter meshFilter;
     private Bounds bounds;
 
+    public enum typeCollision
+    {
+        TOP_DOWN,
+        SIDES,
+        FRONT_BACK,
+        NONE
+    };
+    public typeCollision Type;
+    
+
     // Start is called before the first frame update
     void Start()
     {
+        Type = typeCollision.NONE;
         debug = true;
         isMoving = false;
         gravity = -0.98f;

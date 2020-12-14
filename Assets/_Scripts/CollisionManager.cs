@@ -50,6 +50,18 @@ public class CollisionManager : MonoBehaviour
             {
                 a.contacts.Add(b);
                 a.isColliding = true;
+                switch (LargestSeparation_Cube(a, b))
+                {
+                    case 'x':
+                        a.Type = CubeBehaviour.typeCollision.SIDES;
+                        break;
+                    case 'y':
+                        a.Type = CubeBehaviour.typeCollision.TOP_DOWN;
+                        break;
+                    case 'z':
+                        a.Type = CubeBehaviour.typeCollision.FRONT_BACK;
+                        break;
+                }
             }
         }
         else
@@ -58,6 +70,7 @@ public class CollisionManager : MonoBehaviour
             {
                 a.contacts.Remove(b);
                 a.isColliding = false;
+                a.Type = CubeBehaviour.typeCollision.NONE;
             }
            
         }
@@ -73,6 +86,18 @@ public class CollisionManager : MonoBehaviour
             {
                 b.cube_contacts.Add(c);
                 b.isColliding = true;
+                switch(LargestSeparation_Bullet(b, c))
+                {
+                    case 'x':
+                        b.Type = BulletBehaviour.typeCollision.SIDES;
+                        break;
+                    case 'y':
+                        b.Type = BulletBehaviour.typeCollision.TOP_DOWN;
+                        break;
+                    case 'z':
+                        b.Type = BulletBehaviour.typeCollision.FRONT_BACK;
+                        break;
+                }
             }
         }
         else
@@ -81,8 +106,59 @@ public class CollisionManager : MonoBehaviour
             {
                 b.cube_contacts.Remove(c);
                 b.isColliding = false;
+                b.Type = BulletBehaviour.typeCollision.NONE;
             }
 
         } 
+    }
+    public static char LargestSeparation_Bullet(BulletBehaviour b, CubeBehaviour c)
+    {
+        float distX = Mathf.Abs(b.transform.position.x - c.transform.position.x);
+        float distY = Mathf.Abs(b.transform.position.y - c.transform.position.y);
+        float distZ = Mathf.Abs(b.transform.position.z - c.transform.position.z);
+
+        List<float> distanceDiff = new List<float>();
+        distanceDiff.Add(distX);
+        distanceDiff.Add(distY);
+        distanceDiff.Add(distZ);
+        distanceDiff.Sort();
+        
+        if(distanceDiff[2] == distX)
+        {
+            return 'x';
+        }
+        else if (distanceDiff[2] == distY)
+        {
+            return 'y';
+        }
+        else
+        {
+            return 'z';
+        }
+    }
+    public static char LargestSeparation_Cube(CubeBehaviour c1, CubeBehaviour c2)
+    {
+        float distX = Mathf.Abs(c1.transform.position.x - c2.transform.position.x);
+        float distY = Mathf.Abs(c1.transform.position.y - c2.transform.position.y);
+        float distZ = Mathf.Abs(c1.transform.position.z - c2.transform.position.z);
+
+        List<float> distanceDiff = new List<float>();
+        distanceDiff.Add(distX);
+        distanceDiff.Add(distY);
+        distanceDiff.Add(distZ);
+        distanceDiff.Sort();
+
+        if (distanceDiff[2] == distX)
+        {
+            return 'x';
+        }
+        else if (distanceDiff[2] == distY)
+        {
+            return 'y';
+        }
+        else
+        {
+            return 'z';
+        }
     }
 }

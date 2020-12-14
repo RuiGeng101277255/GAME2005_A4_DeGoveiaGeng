@@ -24,10 +24,19 @@ public class BulletBehaviour : MonoBehaviour
     //pol
     public bool inUse;
     public bool isColliding;
+    public enum typeCollision
+    {
+        TOP_DOWN,
+        SIDES,
+        FRONT_BACK,
+        NONE
+    };
+    public typeCollision Type;
 
     // Start is called before the first frame update
     void Start()
     {
+        Type = typeCollision.NONE;
         debug = false;
         isColliding = false;
         _reset();
@@ -63,12 +72,60 @@ public class BulletBehaviour : MonoBehaviour
         {
             //Destroy(gameObject);
         }
-        if(isColliding)
+        //if(isColliding)
+        //{
+        //    direction.z *= -1.0f;
+        //    transform.position -= new Vector3(0.0f, 0.0f, 1.0f);
+        //    isColliding = false;
+        //}
+
+        Vector3 MoveAmount = new Vector3(0.0f, 0.0f, 0.0f);
+        switch (Type)
         {
-            direction.z *= -1.0f;
-            transform.position -= new Vector3(0.0f, 0.0f, 1.0f);
-            isColliding = false;
+            case typeCollision.TOP_DOWN:
+                direction.y *= -1.0f;
+                if(direction.y > 0.0f)
+                {
+                    MoveAmount.y += 1.0f;
+                }
+                else
+                {
+                    MoveAmount.y -= 1.0f;
+                }
+                transform.position += MoveAmount;
+                
+                break;
+            case typeCollision.SIDES:
+                direction.x *= -1.0f;
+                if (direction.x > 0.0f)
+                {
+                    MoveAmount.x += 1.0f;
+                }
+                else
+                {
+                    MoveAmount.x -= 1.0f;
+                }
+                transform.position += MoveAmount;
+                
+                break;
+            case typeCollision.FRONT_BACK:
+                direction.z *= -1.0f;
+                if (direction.z > 0.0f)
+                {
+                    MoveAmount.z += 1.0f;
+                }
+                else
+                {
+                    MoveAmount.z -= 1.0f;
+                }
+                transform.position += MoveAmount;
+                
+                break;
+            case typeCollision.NONE:
+                MoveAmount = new Vector3(0.0f, 0.0f, 0.0f);
+                break;
         }
+        Type = typeCollision.NONE;
     }
 
     private void OnDrawGizmos()
