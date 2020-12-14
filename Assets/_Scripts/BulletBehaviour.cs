@@ -13,10 +13,18 @@ public class BulletBehaviour : MonoBehaviour
     public Vector3 scale;
     private float radius;
 
+    private MeshFilter bulletMeshFilter;
+    private Bounds bounds;
+
     // Start is called before the first frame update
     void Start()
     {
         debug = false;
+        _calcRadius(scale);
+
+        bulletMeshFilter = GetComponent<MeshFilter>();
+        bounds = bulletMeshFilter.mesh.bounds;
+        scale = bounds.size;
         _calcRadius(scale);
     }
 

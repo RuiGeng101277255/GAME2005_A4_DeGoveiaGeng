@@ -14,6 +14,10 @@ public class CubeBehaviour : MonoBehaviour
     public bool debug;
     public List<CubeBehaviour> contacts;
 
+    private float gravity;
+    private float falling_speed;
+    private bool isMoving;
+
     private MeshFilter meshFilter;
     private Bounds bounds;
 
@@ -21,6 +25,9 @@ public class CubeBehaviour : MonoBehaviour
     void Start()
     {
         debug = true;
+        isMoving = false;
+        gravity = -0.98f;
+        falling_speed = 0.0f;
         meshFilter = GetComponent<MeshFilter>();
 
         bounds = meshFilter.mesh.bounds;
@@ -33,11 +40,43 @@ public class CubeBehaviour : MonoBehaviour
     {
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
+
+        if(isMoving)
+        {
+            transform.position += new Vector3(0.0f, falling_speed * Time.deltaTime, 0.0f);
+        }
     }
 
     void FixedUpdate()
     {
         // physics related calculations
+        if (transform.position.y > -0.5f)
+        {
+            if (!isColliding)
+            {
+                isMoving = true;
+                falling_speed += gravity * Time.deltaTime;
+                transform.position += new Vector3(0.0f, falling_speed * Time.deltaTime, 0.0f);
+            }
+            else
+            {
+                falling_speed *= -1.0f;
+                transform.position += new Vector3(0.0f, 1.0f, 0.0f);
+                isColliding = false;
+            }
+        }
+        else
+        {
+            if(Mathf.Abs(falling_speed)< 0.1f)
+            {
+                isMoving = false;
+                falling_speed = 0.0f;
+            }
+            //isMoving = false;
+            falling_speed *= -1.0f;
+            //transform.position += new Vector3(0.0f, 1.0f, 0.0f);
+            isColliding = false;
+        }
     }
 
     private void OnDrawGizmos()
