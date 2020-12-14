@@ -6,30 +6,27 @@ public class PlayerBehaviour : MonoBehaviour
 {
     public Transform bulletSpawn;
     public GameObject bullet;
-    public int fireRate;
-
+    public float delayTime;
+    private float fireDelay;
 
     public BulletManager bulletManager;
 
     void start()
     {
+        fireDelay = 0.0f;
+        delayTime = GetComponent<float>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if(fireDelay > 0.0f)
         {
-            // delays firing
-            //if (Time.frameCount % fireRate == 0)
-           // {
-                //var tempBullet = Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
-                //tempBullet.GetComponent<BulletBehaviour>().direction = bulletSpawn.forward;
-
-                //tempBullet.transform.SetParent(bulletManager.gameObject.transform);
-                Debug.Log("c pressed");
-                bulletManager.shoot(bulletSpawn);
-            //}
+            fireDelay -= Time.deltaTime;
+        }
+        else
+        {
+            fireDelay = 0.0f;
         }
         _Fire();
     }
@@ -39,17 +36,33 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetAxisRaw("Fire1") > 0.0f)
         {
             // delays firing
-            if (Time.frameCount % fireRate == 0)
+            if (fireDelay == 0.0f)
+            {
+                var tempBullet = Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
+                tempBullet.GetComponent<BulletBehaviour>().direction = bulletSpawn.forward;
+
+                tempBullet.transform.SetParent(bulletManager.gameObject.transform);
+
+                fireDelay = delayTime;
+                //bulletManager.shoot(bulletSpawn);
+            }
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            // delays firing
+            if (fireDelay == 0.0f)
             {
                 //var tempBullet = Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
                 //tempBullet.GetComponent<BulletBehaviour>().direction = bulletSpawn.forward;
 
                 //tempBullet.transform.SetParent(bulletManager.gameObject.transform);
-
+                Debug.Log("c pressed");
                 bulletManager.shoot(bulletSpawn);
+                fireDelay = delayTime;
             }
-
         }
-        
+
     }
 }
