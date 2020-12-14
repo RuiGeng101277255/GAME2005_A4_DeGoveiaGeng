@@ -20,7 +20,7 @@ public class CubeBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        debug = false;
+        debug = true;
         meshFilter = GetComponent<MeshFilter>();
 
         bounds = meshFilter.mesh.bounds;
@@ -47,6 +47,8 @@ public class CubeBehaviour : MonoBehaviour
             Gizmos.color = Color.magenta;
 
             Gizmos.DrawWireCube(transform.position, Vector3.Scale(new Vector3(1.0f, 1.0f, 1.0f), transform.localScale));
+            Gizmos.color = new Color(1.0f, 1.0f, 1.0f);
+            Gizmos.DrawWireSphere(transform.position, 1.0f);
         }
     }
 }
