@@ -96,7 +96,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   direction: {x: 0, y: 0, z: 0}
-  range: 20
+  range: 50
+  mass: 0
+  friction: 0
+  gravity: 0
   debug: 1
   scale: {x: 0.1, y: 0.1, z: 0.1}
+  max: {x: 0, y: 0, z: 0}
+  min: {x: 0, y: 0, z: 0}
+  cube_contacts: []
+  bullet_contacts: []
   inUse: 0
+  isColliding: 0
+  Type: 0
