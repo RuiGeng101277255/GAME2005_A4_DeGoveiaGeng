@@ -98,6 +98,7 @@ public class CollisionManager : MonoBehaviour
                         b.Type = BulletBehaviour.typeCollision.FRONT_BACK;
                         break;
                 }
+                //_updateDirection(b, c, b.Type);
             }
         }
         else
@@ -160,5 +161,45 @@ public class CollisionManager : MonoBehaviour
         {
             return 'z';
         }
+    }
+
+    private static void _updateDirection(BulletBehaviour b, CubeBehaviour c, BulletBehaviour.typeCollision ty)
+    {
+        Vector3 b_pos = b.transform.position;
+        Vector3 c_pos = c.transform.position;
+        float centerDst = Mathf.Sqrt((b_pos.x - c_pos.x)* (b_pos.x - c_pos.x) + (b_pos.y - c_pos.y) * (b_pos.y - c_pos.y) + (b_pos.z - c_pos.z) * (b_pos.z - c_pos.z));
+        Vector3 centerDiff = b_pos - c_pos;
+
+        //Normalize
+        centerDiff /= centerDst; //direction cube will be going
+
+        //momentum m1v1 + m2u1 = m1v2 + m2u2
+
+        float total_momentum = b.mass * getVectorLength(b.direction) + c.mass * getVectorLength(c.direction);
+
+        c.direction += centerDiff * b.mass / c.mass;
+
+        b.direction += centerDiff * c.mass / b.mass;
+
+        //float v_b = ((b.mass - c.mass)/(b.mass + c.mass));
+        //float v_c = ((c.mass - b.mass) / (c.mass + b.mass));
+
+        //b.direction *= 1.0f / v_b;
+
+        switch (ty)
+        {
+            case BulletBehaviour.typeCollision.FRONT_BACK:
+                break;
+            case BulletBehaviour.typeCollision.SIDES:
+                break;
+            case BulletBehaviour.typeCollision.TOP_DOWN:
+                break;
+        }
+
+    }
+
+    private static float getVectorLength(Vector3 vec)
+    {
+        return Mathf.Sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
     }
 }

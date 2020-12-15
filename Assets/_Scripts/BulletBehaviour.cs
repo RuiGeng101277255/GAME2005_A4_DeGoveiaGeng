@@ -40,6 +40,7 @@ public class BulletBehaviour : MonoBehaviour
     void Start()
     {
         Type = typeCollision.NONE;
+        mass = 1.0f;
         debug = false;
         isColliding = false;
         _reset();

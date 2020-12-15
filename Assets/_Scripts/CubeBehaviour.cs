@@ -19,6 +19,7 @@ public class CubeBehaviour : MonoBehaviour
     private float gravity;
     private float falling_speed;
     private bool isMoving;
+    public Vector3 direction;
 
     private MeshFilter meshFilter;
     private Bounds bounds;
@@ -40,7 +41,9 @@ public class CubeBehaviour : MonoBehaviour
         debug = true;
         isMoving = false;
         gravity = -0.98f;
+        direction = new Vector3(0.0f, 0.0f, 0.0f);
         falling_speed = 0.0f;
+        mass = 10.0f;
         meshFilter = GetComponent<MeshFilter>();
 
         bounds = meshFilter.mesh.bounds;
