@@ -76,7 +76,7 @@ public class CubeBehaviour : MonoBehaviour
             }
             else
             {
-                falling_speed *= -1.0f;
+                falling_speed *= -0.5f;
                 //transform.position += new Vector3(0.0f, 0.2f, 0.0f);
                 //isColliding = false;
             }
@@ -90,7 +90,8 @@ public class CubeBehaviour : MonoBehaviour
             }
             else
             {
-                falling_speed *= -1.0f;
+                transform.position = new Vector3(transform.position.x, -0.2f, transform.position.z);
+                falling_speed *= -0.5f;
             }
             //isMoving = false;
             //falling_speed *= -1.0f;
