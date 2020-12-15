@@ -98,7 +98,7 @@ public class CollisionManager : MonoBehaviour
                         b.Type = BulletBehaviour.typeCollision.FRONT_BACK;
                         break;
                 }
-                //_updateDirection(b, c, b.Type);
+                _updateDirection(b, c, b.Type);
             }
         }
         else
@@ -177,9 +177,9 @@ public class CollisionManager : MonoBehaviour
 
         float total_momentum = b.mass * getVectorLength(b.direction) + c.mass * getVectorLength(c.direction);
 
-        c.direction += centerDiff * b.mass / c.mass;
+        c.direction -= centerDiff * b.mass / c.mass;
 
-        b.direction += centerDiff * c.mass / b.mass;
+        //b.direction += centerDiff * c.mass / b.mass;
 
         //float v_b = ((b.mass - c.mass)/(b.mass + c.mass));
         //float v_c = ((c.mass - b.mass) / (c.mass + b.mass));

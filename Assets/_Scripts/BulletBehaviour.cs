@@ -41,7 +41,7 @@ public class BulletBehaviour : MonoBehaviour
     void Start()
     {
         Type = typeCollision.NONE;
-        mass = 1.0f;
+        mass = 20.0f;
         gravity = -0.98f;
         debug = false;
         isColliding = false;
