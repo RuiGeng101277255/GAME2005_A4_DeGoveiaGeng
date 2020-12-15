@@ -99,6 +99,7 @@ public class CollisionManager : MonoBehaviour
                         break;
                 }
                 _updateDirection(b, c, b.Type);
+                c.activated = true;
             }
         }
         else

@@ -22,6 +22,7 @@ public class CubeBehaviour : MonoBehaviour
     public Vector3 direction;
     public float friction;
     private bool fell;
+    public bool activated;
 
     private MeshFilter meshFilter;
     private Bounds bounds;
@@ -58,19 +59,22 @@ public class CubeBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
-        min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
-        direction = new Vector3(direction.x, falling_speed, direction.z);
-
-        if(isMoving)
+        if (activated)
         {
-            transform.position += direction * Time.deltaTime;
-        }
+            max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
+            min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
+            direction = new Vector3(direction.x, falling_speed, direction.z);
 
-        if(fell)
-        {
-            direction = new Vector3(direction.x * friction, direction.y, direction.z * friction);
-            fell = false;
+            if (isMoving)
+            {
+                transform.position += direction * Time.deltaTime;
+            }
+
+            if (fell)
+            {
+                direction = new Vector3(direction.x * friction, direction.y, direction.z * friction);
+                fell = false;
+            }
         }
     }
 
