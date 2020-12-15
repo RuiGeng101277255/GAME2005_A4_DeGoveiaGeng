@@ -11,6 +11,7 @@ public class BulletBehaviour : MonoBehaviour
     public float range;
     public float mass;
     public float friction;
+    public float gravity;
 
     public bool debug;
     public Vector3 scale;
@@ -41,6 +42,7 @@ public class BulletBehaviour : MonoBehaviour
     {
         Type = typeCollision.NONE;
         mass = 1.0f;
+        gravity = -0.98f;
         debug = false;
         isColliding = false;
         _reset();
@@ -57,6 +59,8 @@ public class BulletBehaviour : MonoBehaviour
     {
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
+
+        direction = new Vector3(direction.x, direction.y + gravity * Time.deltaTime, direction.z);
 
         if (inUse)
         {
@@ -92,7 +96,7 @@ public class BulletBehaviour : MonoBehaviour
         switch (Type)
         {
             case typeCollision.TOP_DOWN:
-                direction.y *= -1.0f;
+                direction.y *= -0.75f;
                 //if(direction.y > 0.0f)
                 //{
                 //    MoveAmount.y += 0.2f;
@@ -105,7 +109,7 @@ public class BulletBehaviour : MonoBehaviour
                 
                 break;
             case typeCollision.SIDES:
-                direction.x *= -1.0f;
+                direction.x *= -0.75f;
                 //if (direction.x > 0.0f)
                 //{
                 //    MoveAmount.x += 0.2f;
@@ -118,7 +122,7 @@ public class BulletBehaviour : MonoBehaviour
                 
                 break;
             case typeCollision.FRONT_BACK:
-                direction.z *= -1.0f;
+                direction.z *= -0.75f;
                 //if (direction.z > 0.0f)
                 //{
                 //    MoveAmount.z += 0.2f;
@@ -136,9 +140,10 @@ public class BulletBehaviour : MonoBehaviour
         }
         Type = typeCollision.NONE;
 
-        if (transform.position.y <= -0.2f)
+        if (transform.position.y <= -0.5f)
         {
             Type = typeCollision.TOP_DOWN;
+            transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
         }
     }
 

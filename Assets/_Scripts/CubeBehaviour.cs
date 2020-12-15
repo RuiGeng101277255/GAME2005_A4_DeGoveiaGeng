@@ -41,8 +41,8 @@ public class CubeBehaviour : MonoBehaviour
         debug = true;
         isMoving = false;
         gravity = -0.98f;
-        direction = new Vector3(0.0f, 0.0f, 0.0f);
         falling_speed = 0.0f;
+        direction = new Vector3(0.0f, falling_speed, 0.0f);
         mass = 10.0f;
         meshFilter = GetComponent<MeshFilter>();
 
@@ -56,23 +56,24 @@ public class CubeBehaviour : MonoBehaviour
     {
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
+        direction = new Vector3(direction.x, falling_speed, direction.z);
 
         if(isMoving)
         {
-            transform.position += new Vector3(0.0f, falling_speed * Time.deltaTime, 0.0f);
+            transform.position += new Vector3(0.0f, direction.y * Time.deltaTime, 0.0f);
         }
     }
 
     void FixedUpdate()
     {
         // physics related calculations
-        if (transform.position.y >= -0.2f)
+        if (transform.position.y >= -0.5f)
         {
             if (!isColliding)
             {
                 isMoving = true;
                 falling_speed += gravity * Time.deltaTime;
-                transform.position += new Vector3(0.0f, falling_speed * Time.deltaTime, 0.0f);
+                transform.position += new Vector3(0.0f, direction.y * Time.deltaTime, 0.0f);
             }
             else
             {
@@ -90,7 +91,7 @@ public class CubeBehaviour : MonoBehaviour
             }
             else
             {
-                transform.position = new Vector3(transform.position.x, -0.2f, transform.position.z);
+                transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
                 falling_speed *= -0.5f;
             }
             //isMoving = false;
