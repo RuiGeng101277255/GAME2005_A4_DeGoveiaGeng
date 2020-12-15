@@ -44,6 +44,7 @@ public class CubeBehaviour : MonoBehaviour
         debug = true;
         isMoving = false;
         fell = false;
+        activated = false;
         gravity = -0.98f;
         falling_speed = 0.0f;
         friction = 0.5f;
@@ -80,44 +81,47 @@ public class CubeBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        // physics related calculations
-        if (transform.position.y >= -0.5f)
+        if (activated)
         {
-            if (!isColliding)
+            // physics related calculations
+            if (transform.position.y >= -0.5f)
             {
-                isMoving = true;
-                falling_speed += gravity * Time.deltaTime;
-                transform.position += new Vector3(0.0f, direction.y * Time.deltaTime, 0.0f);
+                if (!isColliding)
+                {
+                    isMoving = true;
+                    falling_speed += gravity * Time.deltaTime;
+                    transform.position += new Vector3(0.0f, direction.y * Time.deltaTime, 0.0f);
+                }
+                else
+                {
+                    falling_speed *= -0.5f;
+                    fell = true;
+                    //direction = new Vector3(direction.x, direction.y * -1.0f, direction.z) * 0.5f;
+
+                    //transform.position += new Vector3(0.0f, 0.2f, 0.0f);
+                    //isColliding = false;
+                }
             }
             else
             {
-                falling_speed *= -0.5f;
-                fell = true;
-                //direction = new Vector3(direction.x, direction.y * -1.0f, direction.z) * 0.5f;
+                if (Mathf.Abs(falling_speed) < 0.01f)
+                {
+                    isMoving = false;
+                    falling_speed = 0.0f;
+                }
+                else
+                {
+                    transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
+                    falling_speed *= -0.5f;
+                    fell = true;
+                    //direction = new Vector3(direction.x, direction.y * -1.0f, direction.z) * 0.5f;
 
+                }
+                //isMoving = false;
+                //falling_speed *= -1.0f;
                 //transform.position += new Vector3(0.0f, 0.2f, 0.0f);
                 //isColliding = false;
             }
-        }
-        else
-        {
-            if(Mathf.Abs(falling_speed) < 0.01f)
-            {
-                isMoving = false;
-                falling_speed = 0.0f;
-            }
-            else
-            {
-                transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
-                falling_speed *= -0.5f;
-                fell = true;
-                //direction = new Vector3(direction.x, direction.y * -1.0f, direction.z) * 0.5f;
-
-            }
-            //isMoving = false;
-            //falling_speed *= -1.0f;
-            //transform.position += new Vector3(0.0f, 0.2f, 0.0f);
-            //isColliding = false;
         }
     }
 

@@ -62,6 +62,18 @@ public class BulletBehaviour : MonoBehaviour
 
         direction = new Vector3(direction.x, direction.y + gravity * Time.deltaTime, direction.z);
 
+        if (((transform.position.x <= -24.5f) || (transform.position.x >= 24.5f)) && ((transform.position.z <= -24.5f) || (transform.position.z >= 24.5f)))
+        {
+            if ((24.5f - Mathf.Abs(transform.position.x) < (24.5f - Mathf.Abs(transform.position.z))))
+            {
+                Type = typeCollision.SIDES;
+            }
+            else
+            {
+                Type = typeCollision.FRONT_BACK;
+            }
+        }
+
         if (inUse)
         {
             _Move();
@@ -85,6 +97,8 @@ public class BulletBehaviour : MonoBehaviour
             //Destroy(gameObject);
             _reset();
         }
+
+        
         //if(isColliding)
         //{
         //    direction.z *= -1.0f;

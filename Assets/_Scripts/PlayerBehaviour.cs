@@ -29,6 +29,7 @@ public class PlayerBehaviour : MonoBehaviour
             fireDelay = 0.0f;
         }
         _Fire();
+        Debug.Log(transform.position);
     }
 
     private void _Fire()
