@@ -10,6 +10,7 @@ public class PlayerBehaviour : MonoBehaviour
     private float fireDelay;
 
     public BulletManager bulletManager;
+    public SceneManager m_sceneManager;
 
     void start()
     {
@@ -39,30 +40,25 @@ public class PlayerBehaviour : MonoBehaviour
             // delays firing
             if (fireDelay == 0.0f)
             {
-                var tempBullet = Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
-                tempBullet.GetComponent<BulletBehaviour>().direction = bulletSpawn.forward;
-
-                tempBullet.transform.SetParent(bulletManager.gameObject.transform);
-
-                fireDelay = delayTime;
-                //bulletManager.shoot(bulletSpawn);
-            }
-
-        }
-
-        if (Input.GetKey(KeyCode.C))
-        {
-            // delays firing
-            if (fireDelay == 0.0f)
-            {
                 //var tempBullet = Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
                 //tempBullet.GetComponent<BulletBehaviour>().direction = bulletSpawn.forward;
 
                 //tempBullet.transform.SetParent(bulletManager.gameObject.transform);
+
+                //fireDelay = delayTime;
+                //bulletManager.shoot(bulletSpawn);
+
                 Debug.Log("c pressed");
                 bulletManager.shoot(bulletSpawn);
                 fireDelay = delayTime;
             }
+
+        }
+
+        if (Input.GetKey(KeyCode.M))
+        {
+            //Main menu
+            m_sceneManager.GoToScene("StartScene");
         }
 
     }
